@@ -39,4 +39,4 @@ cp .env.example .env
 ```
 
 ## Launching Frontend
-Start frontend by going to `app` and executing `streamlit run app.py`
+Start frontend by going to `app` and executing `streamlit run main.py`
