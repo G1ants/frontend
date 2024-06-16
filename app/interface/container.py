@@ -2,27 +2,26 @@ from typing import Optional
 import streamlit as st
 
 from api.message import send_message
-from interface.messages import display_messages
 from utils import display_message
 from models.message import Message, MessageRequest, MessageResponse, Role
-
-if 'input' not in st.session_state:
-    st.session_state.input = ""
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = [] 
-
-def display_interface():
-    display_messages()
-    st.session_state.input = st.text_input(label="chat_input", label_visibility="collapsed", placeholder="Type here...")
     
-    _, sendBtnCol = st.columns((7, 1))
-    with sendBtnCol:
-        send_btn = st.button(
-            label="Send", 
-            key="send_button", 
-            disabled=not st.session_state.get("input"),
+def display_interface():
+    for message in st.session_state.chat_history:
+        with st.chat_message(message.role):
+            st.markdown(message.content)
+
+    if prompt := st.chat_input("Enter text here..."):
+        st.session_state.chat_history.append(
+            Message(
+                role=Role.USER,
+                content=prompt
+            )
         )
-        if send_btn:
+        
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        with st.chat_message("assistant"):
             message_response: Optional[MessageResponse] = send_message(
                 input=MessageRequest(
                     message=st.session_state.input,
@@ -35,17 +34,9 @@ def display_interface():
                     isError=True
                 )
             else:
-                chat_history: list[Message] = st.session_state.get("chat_history")
-                curr_shot: list[Message] = [
-                    Message(
-                        role=Role.USER,
-                        content=st.session_state.get("input")
-                    ),
+                st.session_state.chat_history.append(
                     Message(
                         role=Role.ASSISTANT,
                         content=message_response.message
                     )
-                ] 
-                chat_history.extend(curr_shot)
-                st.session_state.chat_history = chat_history
-                print(st.session_state.chat_history)
+                )
