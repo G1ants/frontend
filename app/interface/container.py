@@ -2,6 +2,7 @@ from typing import Optional
 import streamlit as st
 
 from api.message import send_message
+from interface.messages import display_messages
 from utils import display_message
 from models.message import Message, MessageRequest, MessageResponse, Role
 
@@ -11,7 +12,7 @@ if 'chat_history' not in st.session_state:
     st.session_state.chat_history = [] 
 
 def display_interface():
-    st.text_area(label="chat_box", label_visibility="collapsed", height=500, disabled=True)
+    display_messages()
     st.session_state.input = st.text_input(label="chat_input", label_visibility="collapsed", placeholder="Type here...")
     
     _, sendBtnCol = st.columns((7, 1))
@@ -48,4 +49,3 @@ def display_interface():
                 chat_history.extend(curr_shot)
                 st.session_state.chat_history = chat_history
                 print(st.session_state.chat_history)
-                
