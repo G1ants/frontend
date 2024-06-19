@@ -6,13 +6,13 @@ from menu.container import display_menu
 
 apply_custom_style()
 menu, interface = st.columns((2, 8))
-if 'input' not in st.session_state:
+if "input" not in st.session_state:
     st.session_state.input = ""
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
-    
+
 with menu:
     display_menu()
-    
+
 with interface:
     display_interface()

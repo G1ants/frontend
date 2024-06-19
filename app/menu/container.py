@@ -5,13 +5,15 @@ from models.agent import Agent
 
 log = logging.getLogger(__name__)
 
-if 'agent' not in st.session_state:
+if "agent" not in st.session_state:
     st.session_state.agent = None
-    
+
+
 # Function to handle button clicks and set the agent
 def set_agent(agent: Agent):
     st.session_state.agent = agent
     log.info(f"Agent set to {agent}")
+
 
 # Function to display the menu with buttons
 def display_menu():
@@ -25,7 +27,6 @@ def display_menu():
         set_agent(agent=Agent.NAPOLEON)
     if st.button("Oppenheimer"):
         set_agent(agent=Agent.OPPENHEIMER)
-    
-    
+
     if st.session_state.get("agent"):
         st.write(f"Leader selected: {st.session_state.get('agent').value}")

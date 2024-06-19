@@ -1,10 +1,8 @@
 import time
 import streamlit as st
 
-def display_message(
-    message: str,
-    isError: bool
-) -> None:
+
+def display_message(message: str, isError: bool) -> None:
     POPUP_TEMPLATE = f"""<div style="
         position: fixed;
         top: 15%;
@@ -24,9 +22,6 @@ def display_message(
     </div>
     """
     popup = st.empty()
-    popup.markdown(
-        POPUP_TEMPLATE,
-        unsafe_allow_html=True
-    )
+    popup.markdown(POPUP_TEMPLATE, unsafe_allow_html=True)
     time.sleep(2)
     popup.empty()

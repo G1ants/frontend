@@ -66,6 +66,7 @@ werkzeug = "3.0.3"
 wsproto = "1.2.0"
 zipp = "3.19.1"
 pydantic = "^2.7.3"
+black = "^24.4.2"
 
 
 [build-system]
