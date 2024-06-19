@@ -25,3 +25,7 @@ def display_menu():
         set_agent(agent=Agent.NAPOLEON)
     if st.button("Oppenheimer"):
         set_agent(agent=Agent.OPPENHEIMER)
+    
+    
+    if st.session_state.get("agent"):
+        st.write(f"Leader selected: {st.session_state.get('agent').value}")

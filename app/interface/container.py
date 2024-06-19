@@ -10,34 +10,40 @@ def display_interface():
         with st.chat_message(message.role):
             st.markdown(message.content)
 
-    if prompt := st.chat_input("Enter text here..."):
-        st.session_state.chat_history.append(
-            Message(
-                role=Role.USER,
-                content=prompt
+    with st.form(key="chat_input_form"):
+        prompt: str = st.text_input("Enter text here...")
+        submit_button = st.form_submit_button(label="Send", disabled=st.session_state.get("agent") is None)
+        
+    if submit_button:
+        message_response: Optional[MessageResponse] = send_message(
+            input=MessageRequest(
+                message=prompt,
+                chat_history=st.session_state.get("chat_history"),
+                agent=st.session_state.get("agent")
             )
         )
         
-        with st.chat_message("user"):
-            st.markdown(prompt)
+        if message_response:
+            with st.chat_message("user"):
+                st.markdown(prompt)
 
-        with st.chat_message("assistant"):
-            message_response: Optional[MessageResponse] = send_message(
-                input=MessageRequest(
-                    message=st.session_state.input,
-                    chat_history=st.session_state.get("chat_history"),
-                    agent=st.session_state.get("agent")
-                )
-            )
-            if not message_response:
-                display_message(
-                    message="Error occurred while sending message",
-                    isError=True
-                )
-            else:
-                st.session_state.chat_history.append(
-                    Message(
-                        role=Role.ASSISTANT,
-                        content=message_response.content
+            with st.chat_message("assistant"):
+                if not message_response:
+                    display_message(
+                        message="Error occurred while sending message",
+                        isError=True
                     )
-                )
+                else:
+                                        
+                    st.session_state.chat_history.append(
+                        Message(
+                            role=Role.USER,
+                            content=prompt
+                        )
+                    )
+                    st.session_state.chat_history.append(
+                        Message(
+                            role=Role.ASSISTANT,
+                            content=message_response.content
+                        )
+                    )
