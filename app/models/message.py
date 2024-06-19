@@ -1,5 +1,6 @@
 from enum import StrEnum
 from pydantic import BaseModel
+from models.agent import Agent
 
 class Role(StrEnum):
     USER = "user"
@@ -12,6 +13,8 @@ class Message(BaseModel):
 class MessageRequest(BaseModel):
     message: str
     chat_history: list[Message]
+    agent: Agent
 
-class MessageResponse(BaseModel): 
-    message: str
+class MessageResponse(BaseModel):
+    content: str
+    agent: Agent

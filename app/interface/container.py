@@ -25,7 +25,8 @@ def display_interface():
             message_response: Optional[MessageResponse] = send_message(
                 input=MessageRequest(
                     message=st.session_state.input,
-                    chat_history=st.session_state.get("chat_history")
+                    chat_history=st.session_state.get("chat_history"),
+                    agent=st.session_state.get("agent")
                 )
             )
             if not message_response:
@@ -37,6 +38,6 @@ def display_interface():
                 st.session_state.chat_history.append(
                     Message(
                         role=Role.ASSISTANT,
-                        content=message_response.message
+                        content=message_response.content
                     )
                 )
