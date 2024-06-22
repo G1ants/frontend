@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Optional
 from pydantic import BaseModel
 from models.agent import Agent
 
@@ -11,6 +12,7 @@ class Role(StrEnum):
 class Message(BaseModel):
     role: Role
     content: str
+    is_rag: Optional[bool] = None
 
 
 class MessageRequest(BaseModel):
@@ -22,3 +24,4 @@ class MessageRequest(BaseModel):
 class MessageResponse(BaseModel):
     content: str
     agent: Agent
+    is_rag: bool

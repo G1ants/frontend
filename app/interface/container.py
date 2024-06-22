@@ -10,6 +10,8 @@ def display_interface():
     for message in st.session_state.chat_history:
         with st.chat_message(message.role):
             st.markdown(message.content)
+            if message.is_rag:
+                st.markdown("This is a RAG message")
 
     with st.form(key="chat_input_form"):
         prompt: str = st.text_input("Enter text here...")
@@ -36,5 +38,5 @@ def display_interface():
                     Message(role=Role.USER, content=prompt)
                 )
                 st.session_state.chat_history.append(
-                    Message(role=Role.ASSISTANT, content=message_response.content)
+                    Message(role=Role.ASSISTANT, content=message_response.content, is_rag=message_response.is_rag)
                 )
