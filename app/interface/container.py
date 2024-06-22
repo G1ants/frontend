@@ -27,19 +27,14 @@ def display_interface():
         )
 
         if message_response:
-            with st.chat_message("user"):
-                st.markdown(prompt)
-
-            with st.chat_message("assistant"):
-                if not message_response:
-                    display_message(
-                        message="Error occurred while sending message", isError=True
-                    )
-                else:
-
-                    st.session_state.chat_history.append(
-                        Message(role=Role.USER, content=prompt)
-                    )
-                    st.session_state.chat_history.append(
-                        Message(role=Role.ASSISTANT, content=message_response.content)
-                    )
+            if not message_response:
+                display_message(
+                    message="Error occurred while sending message", isError=True
+                )
+            else:
+                st.session_state.chat_history.append(
+                    Message(role=Role.USER, content=prompt)
+                )
+                st.session_state.chat_history.append(
+                    Message(role=Role.ASSISTANT, content=message_response.content)
+                )
