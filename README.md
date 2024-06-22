@@ -1,5 +1,5 @@
 # Frontend
-Chat interface for Giants
+Chat interface for Giants, a platform that clones the top 0.0001% of leaders. Get real advice from the greats such as Paul Graham and Napoleon!
 
 ## Install Poetry
 
